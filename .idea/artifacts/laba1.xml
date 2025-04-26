@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="laba1">
+    <output-path>$PROJECT_DIR$/out/artifacts/laba1</output-path>
+    <root id="archive" name="laba1.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Laba1/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Laba1" />
+    </root>
+  </artifact>
+</component>

@@ -85,51 +85,64 @@ public class Main {
 
     private void handleEncrypt(ActionEvent e) {
         String text = inputArea.getText().toUpperCase().replaceAll("[^А-ЯЁ]", "");
-        String key = keyField.getText().toUpperCase().replaceAll("[^А-ЯЁ0-9]", "");
+        String keyInput = keyField.getText().toUpperCase();
 
-        if (text.isEmpty() || key.isEmpty()) {
+        if (text.isEmpty() || keyInput.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Введите текст и ключ/число", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         String result;
         if (vigenereRadio.isSelected()) {
+            String key = keyInput.replaceAll("[^А-ЯЁ]", ""); // оставляем только буквы
+            if (key.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Ключ для шифра Виженера должен содержать только буквы", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             result = VigenereCipher.encrypt(text, key);
         } else {
-            try {
-                int rails = Integer.parseInt(key);
-                result = RailwayCipher.encrypt(text, rails);
-            } catch (NumberFormatException ex) {
+            String digits = keyInput.replaceAll("[^0-9]", ""); // оставляем только цифры
+            if (digits.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Для железнодорожного шифра введите число", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            int rails = Integer.parseInt(digits);
+            result = RailwayCipher.encrypt(text, rails);
         }
+
         outputArea.setText(result);
     }
 
     private void handleDecrypt(ActionEvent e) {
         String text = inputArea.getText().toUpperCase().replaceAll("[^А-ЯЁ]", "");
-        String key = keyField.getText().toUpperCase().replaceAll("[^А-ЯЁ0-9]", "");
+        String keyInput = keyField.getText().toUpperCase();
 
-        if (text.isEmpty() || key.isEmpty()) {
+        if (text.isEmpty() || keyInput.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Введите текст и ключ/число", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         String result;
         if (vigenereRadio.isSelected()) {
+            String key = keyInput.replaceAll("[^А-ЯЁ]", ""); // оставляем только буквы
+            if (key.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Ключ для шифра Виженера должен содержать только буквы", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             result = VigenereCipher.decrypt(text, key);
         } else {
-            try {
-                int rails = Integer.parseInt(key);
-                result = RailwayCipher.decrypt(text, rails);
-            } catch (NumberFormatException ex) {
+            String digits = keyInput.replaceAll("[^0-9]", ""); // оставляем только цифры
+            if (digits.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Для железнодорожного шифра введите число", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            int rails = Integer.parseInt(digits);
+            result = RailwayCipher.decrypt(text, rails);
         }
+
         outputArea.setText(result);
     }
+
 
     private void handleOpen(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
